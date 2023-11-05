@@ -1,8 +1,8 @@
-import { Context, Schema } from '@koishijs/client'
+import { Context, Schema, useConfig } from '@koishijs/client'
 
 export default (ctx: Context) => {
   ctx.settings({
-    id: undefined,
+    id: 'desktop-enhance',
     title: 'Koishi 桌面设置',
     order: 10000,
     schema: Schema.object({
@@ -20,6 +20,14 @@ export default (ctx: Context) => {
           .default('off')
           .description('Koishi 桌面增强模式。'),
       }).description('Koishi 桌面设置'),
-    }).description('Koishi 桌面设置'),
+    }),
+  })
+
+  ctx.on('ready', () => {
+    const config = useConfig()
+
+    if (config.value.desktop.enhance !== 'off')
+      console.log('111')
+    else console.log('222')
   })
 }
